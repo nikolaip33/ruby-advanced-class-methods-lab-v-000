@@ -38,7 +38,7 @@ class Song
   end
 
   def self.alphabetical
-    @@all.sort_by { |song| song.name }
+    @@all.sort_by(&:name)
   end
 
   def self.new_from_filename(filename)
@@ -49,8 +49,9 @@ class Song
   end
 
   def self.create_from_filename(filename)
-    song = self.new_from_filename(filename)
-    @@all << song
+    parts = filename.split(" - ")
+    song = self.create_by_name(parts[1].chomp(".mp3"))
+    song.artist_name = parts[0]
     song
   end
 
